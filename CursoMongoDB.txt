@@ -1,0 +1,23 @@
+*** AULA01
+* Setando diretorio db para o mongo server:
+
+mongod --dbpath C:\PESSOAL\dev\alura2020\CursoMongoDB\db
+
+* No cliente mongo: 
+
+** Criando uma coleção ("tabela")
+db.createCollection("alunos")
+
+** Inserindo dados
+{
+	"nome": "Felipe",
+	"data_nascimento": new Date(1994,02,26)
+}
+
+db.alunos.insert(
+{
+	"nome": "Felipe",
+	"data_nascimento": new Date(1994,02,26)
+}
+)
+
