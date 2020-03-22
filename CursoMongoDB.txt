@@ -197,6 +197,7 @@ db.alunos.find(
 ** Buscando por curso e habilidade
 
 Todos os alunos de Ciências da Computação com habilidade Inglês
+A consulta utiliza um objeto do javaScript
 
 db.alunos.find(
 {
@@ -206,4 +207,49 @@ db.alunos.find(
 ).pretty()
 
 O find sempre traz todos os campos do documento
+
+** Operadores lógicos
+* $or
+db.alunos.find(
+{
+	$or : [
+		{"curso.nome": "Sistemas de informação"},
+		{"curso.nome": "Engenharia Química"}
+	      ]
+}
+)
+
+* tenhas as duas condições e o nome seja Daniela
+db.alunos.find(
+{
+	$or : [
+		{"curso.nome": "Sistemas de informação"},
+		{"curso.nome": "Engenharia Química"}
+	      ],
+	"nome": "Daniela"
+}
+)
+
+A Daniela esta no curso de moda
+db.alunos.find(
+{
+	$or : [
+		{"curso.nome": "Sistemas de informação"},
+		{"curso.nome": "Engenharia Química"},
+		{"curso.nome": "Moda"}
+	      ],
+	"nome": "Daniela"
+}
+)
+
+* $in
+db.alunos.find(
+{
+	"curso.nome": { $in : ["Sistemas de informação", "Engenharia Química", "Moda"]},
+	nome: "Daniela"
+}
+)
+
+
+
 
