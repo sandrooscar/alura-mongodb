@@ -250,6 +250,35 @@ db.alunos.find(
 }
 )
 
+db.alunos.find(
+{
+	"curso.nome": { $in : ["Sistemas de informação", "Engenharia Química", "Moda"]}
+}
+)
 
+** Exercicios
+
+db.alunos.find({nome: "Felipe"})
+
+db.alunos.find(
+{
+	nome: "Felipe",
+	data_nascimento: new date(1994,02,26)
+}
+)
+
+ATENÇÃO: Quando usar o new Date() lembre-se que o mês vai de 0 (janeiro) à 11 (dezembro)
+
+db.alunos.find(
+{
+	"habilidades.nome": "Inglês"
+}
+).pretty()
+
+db.alunos.find(
+{
+	"curso.nome": { $in : ["Sistemas de informação", "Engenharia Química"]}
+}
+)
 
 
