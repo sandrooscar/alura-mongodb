@@ -22,7 +22,8 @@ db.alunos.insert(
 )
 
 ** Inserindo mais dados  atributos
-{
+
+db.alunos.insert({
 	"nome": "Felipe",
 	"data_nascimento": new Date(1994,02,26),
 	"curso": {
@@ -39,7 +40,7 @@ db.alunos.insert(
 			"nível": "básico"
 		}
 	] 
-}
+})
 
 ** find básico
 db.alunos.find()
@@ -278,6 +279,175 @@ db.alunos.find(
 db.alunos.find(
 {
 	"curso.nome": { $in : ["Sistemas de informação", "Engenharia Química"]}
+}
+)
+
+*** AULA03- Atualização completa ou parcial de documentos
+
+db.alunos.insert(
+{
+	nome: "Fernado",
+	data_nascimento: new Date(1994, 03, 26),
+	notas: [10, 4.5, 7],
+	curso: {
+		nome: "Sistema de informação"
+	}
+}
+)
+
+db.alunos.find(
+{
+	"curso.nome": "Sistema de informação"
+}
+)
+
+** Update é utilizado para trocar o valor de um documento
+
+db.alunos.update(
+{"curso.nome": "Sistema de informação"},
+{
+	"curso.nome": "Sistemas de informação"
+}
+)
+
+
+* $set funciona como update de um determinado resgistro como no sql, se não usar o $set o documento é substituido
+
+db.alunos.update(
+{"curso.nome": "Sistema de informação"},
+{
+	$set : {
+		"curso.nome": "Sistemas de Informação"
+	}
+}
+)
+
+ATENÇÃO: update por PADRÃO só atualizará o primeiro documento que encontrar, pq o conceito é de troca, é dificil vc querer atualizar N documentos por um só valor
+O padrão é, torque todo o conteúdo SOMENTE do primeiro documento
+
+ATENÇÃO: o update não aceita o sinal de ".". Assim, não podemos escrever dentro das chaves curso.nome.
+
+db.alunos.update(
+	{"curso.nome": "Sistemas de Informação"},
+	{
+		$set : {
+			"curso.nome": "Sistemas De Informação"
+			}
+	},
+	{
+		multi : true
+	}
+)
+
+** Mais operações e cuidados (Array e push each)
+
+db.alunos.update(
+{nome: "Felipe"},
+{
+	$push : {
+		notas: 8.5
+	}
+}
+)
+
+db.alunos.update(
+{nome: "Felipe"},
+{
+	$push : {
+		notas: [8.5, 3]
+	}
+}
+)
+
+db.alunos.update(
+{nome: "Felipe"},
+{
+	$set : {
+		notas: [10, 9, 4.5, 8.5, 8.5]
+	}
+}
+)
+
+* Quero enviar para o array de notas cada um dos valores a seguir
+db.alunos.update(
+{nome: "Felipe"},
+{
+	$push : {
+		notas: { $each : [8.5, 3] }
+	}
+}
+)
+
+* Exercicios:
+
+db.alunos.update(
+{nome: "Felipe"},
+{
+	nome: "Sandro",
+	curso: {
+		nome: "Ciencias da Computação"
+	},
+	habilidades:[
+		{
+			nome: "Inglês",
+			nível: "Técnico"
+		},
+		{
+			nome: "Java",
+			nível: "Certificação z808"	
+		},
+		{
+			nome: "SQL",
+			nível: "Intermediário"
+		}
+	]
+}
+)
+
+
+db.alunos.update(
+{
+	"curso.nome": "Engenharia de Produção"
+}, 
+{
+	$set:
+	{
+		"curso.nome": "Administração"
+	}
+}, 
+{
+	multi:true
+}
+)
+
+db.alunos.update(
+{nome: "Felipe"},
+{
+	$push : {
+			notas: 9.0
+		}
+}
+)
+
+db.alunos.insert(
+{
+	nome: "Guilherme",
+	data_nascimento: new Date(1981,10,23),
+	curso: {
+		nome: "Ciências da Computação"
+	},
+	notas : [10, 7]
+}
+)
+
+db.alunos.update(
+{nome: "Guilherme"},
+{
+	$push : {
+			notas: { 
+					$each : [3,2,7.5]
+				}
+		}
 }
 )
 
