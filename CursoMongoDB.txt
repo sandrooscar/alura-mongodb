@@ -535,3 +535,23 @@ db.alunos.findOne(
 	"curso.nome" : "Sistemas De Informação"
 }
 )
+
+*** AULA05 - Busca pro proximidade
+As coordernadas possuem um padrão no MongoDB, que são coordinates: [-23.588213, -46.632356] e o type: "Point"
+
+db.alunos.update(
+{"_id" : ObjectId("5e777e4851da971a62a134b7")},
+{
+	$set : {
+			localizacao : {
+					endereco: "Rua Vergueiro, 3185",
+					coordinates: [-23.588213, -46.632356], 
+					type: "Point"
+					}
+		}
+}
+)
+
+db.alunoscoordenadas.insertMany(
+<alunos.json>
+)
