@@ -102,3 +102,30 @@ db.alunos.insert(
 }
 )
 
+** Como ficaria no banco relacional
+
+create table cursos(
+	id integer primary key auto_increment,
+	nome varchar(255)
+);
+
+create table alunos (
+	id integer primary key auto_increment,
+	nome varchar(255), 
+	curso_id integer, data_nascimento date
+
+);
+
+create table notas (
+	id integer primary key auto_increment,
+	nota decimal(3,2),
+	aluno_id integer
+);
+
+create table habilidades (
+	id integer primary key auto_increment,
+	nome varchar(255),
+	nivel varchar(255),
+	aluno_id integer
+);
+
