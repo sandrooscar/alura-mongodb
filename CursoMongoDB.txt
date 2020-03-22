@@ -424,7 +424,7 @@ db.alunos.update(
 {nome: "Felipe"},
 {
 	$push : {
-			notas: 9.0
+			notas: 8.5
 		}
 }
 )
@@ -451,4 +451,53 @@ db.alunos.update(
 }
 )
 
+*** AULA04 - Ordenando e limitando os dados
+
+** Busca especifica por nota 8.5
+db.alunos.find(
+{
+	notas: 8.5
+}
+
+** Busca por notas maiores que 5
+
+db.alunos.find(
+{
+	notas : {
+		$gt : 5
+	}
+}
+)
+
+db.alunos.insert(
+{
+	nome:"André",
+	data_nascimento: new Date(1991, 01, 25),
+	curso: {
+		nome: "Matemática"
+	},
+	notas: [7, 5, 9, 4.5]
+}
+)
+
+db.alunos.insert(
+{
+	nome: "Lúcia",
+	data_nascimento: new Date(1987, 07, 17),
+	curso: {
+		nome: "Matemática"
+	},
+	notas: [8, 9.5, 10]
+}
+)
+
+** Buscando apenas um documento que satisfaça a condição
+
+db.alunos.findOne(
+{
+	notas : {
+		$gt : 5
+	}
+}
+)
 
