@@ -129,3 +129,7 @@ create table habilidades (
 	aluno_id integer
 );
 
+** Vantagem e Desvantagem
+Uma situação onde o MongoDB é bastante usado é quando precisamos realizar buscas por proximidade, como, por exemplo, localizar a pizzaria mais próxima de você.
+
+Situações onde o uso do MongoDB não é indicado são cenários onde precisamos fazer muitas operações de agregação em uma única query, isso tem muito custo para o MongoDB.
