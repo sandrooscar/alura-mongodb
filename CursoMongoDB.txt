@@ -102,6 +102,28 @@ db.alunos.insert(
 }
 )
 
+db.alunos.insert(
+{
+	nome: "Paulo",
+	data_nascimento: new Date(1979, 12, 31),
+	curso: {
+		nome: "Ciências da Computação"
+	},
+	notas: [10, 9, 7],
+	habilidades: [
+		{
+			nome: "Inglês",
+			nível: "Avançado"
+		},
+		{
+			nome: "Francês",
+			nível: "Avançado"
+		}
+
+	]
+}
+)
+
 ** Como ficaria no banco relacional
 
 create table cursos(
@@ -133,3 +155,55 @@ create table habilidades (
 Uma situação onde o MongoDB é bastante usado é quando precisamos realizar buscas por proximidade, como, por exemplo, localizar a pizzaria mais próxima de você.
 
 Situações onde o uso do MongoDB não é indicado são cenários onde precisamos fazer muitas operações de agregação em uma única query, isso tem muito custo para o MongoDB.
+
+*** AULA02 - Filtros
+
+Formatação legivel:
+
+db.alunos.find().pretty()
+
+Pesquisa:
+A maneira mais simples de pesquisar é passando um objeto de exemplo do que queremos procurar:
+
+db.alunos.find(
+{
+	nome: "Felipe"
+}
+).pretty()
+
+
+** Inserindo novo aluno com mesmo nome: 
+Cada elemento pode ter uma estrutura diferente da outra.
+
+db.alunos.insert(
+{
+        "nome" : "Felipe",
+        "curso" : {
+                "nome" : "Matemática"
+        }
+}
+)
+
+** Buscando por habilidades
+
+Todos os alunos com habilidade Inglês
+
+db.alunos.find(
+{
+	"habilidades.nome":"Inglês"
+}
+).pretty()
+
+** Buscando por curso e habilidade
+
+Todos os alunos de Ciências da Computação com habilidade Inglês
+
+db.alunos.find(
+{
+	"curso.nome": "Ciências da Computação",
+	"habilidades.nome":"Inglês"
+}
+).pretty()
+
+O find sempre traz todos os campos do documento
+
