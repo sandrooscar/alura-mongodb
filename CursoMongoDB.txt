@@ -555,3 +555,85 @@ db.alunos.update(
 db.alunoscoordenadas.insertMany(
 <alunos.json>
 )
+
+** Aggregate (busca proximidade)
+Necessário criar um indice para informar ao mongo quais campos localizar, e indicar qual será a formula para o calculo da distância (no nosso caso spherical)
+db.alunosCoordenadas.aggregate(
+[
+{
+	$geoNear : {
+		near: {
+			coordinates: [-23.5640265, -46.6527128],
+			type: "Point"
+		},
+		distanceField: "distancia.calculada",
+		spherical: true
+	}
+}
+]
+)
+
+* Calcula a distancia e retorna os 5 mais próximos
+https://docs.mongodb.com/manual/reference/operator/aggregation/geoNear/
+db.alunosCoordenadas.aggregate(
+[
+{
+	$geoNear : {
+		near: {
+			coordinates: [-23.5640265, -46.6527128],
+			type: "Point"
+		},
+		distanceField: "distancia.calculada",
+		spherical: true
+	}
+}	
+]
+)
+
+* limitando os 5 primeiros elementos mais próximos
+
+db.alunosCoordenadas.aggregate(
+[
+{
+	$geoNear : {
+		near: {
+			coordinates: [-23.5640265, -46.6527128],
+			type: "Point"
+		},
+		distanceField: "distancia.calculada",
+		spherical: true
+	}
+},
+	{
+		$limit: 5
+	}
+]
+)
+
+* descartando o primeiro elemento, que é o ponto zero (o proprio elemento utilizado pela busca)
+db.alunosCoordenadas.aggregate(
+[
+	{
+	$geoNear : {
+		near: {
+			coordinates: [-23.5640265, -46.6527128],
+			type: "Point"
+		},
+		distanceField: "distancia.calculada",
+		spherical: true
+		}
+	},
+	{
+		$limit: 4
+	},
+	{
+		$skip: 1
+	}
+]
+)
+* Necessário criar um indice para indicar ao mongodb comom procurar a localizacao
+db.alunosCoordenadas.createIndex(
+{
+localizacao: "2dsphere"
+}
+)
