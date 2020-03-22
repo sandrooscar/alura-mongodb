@@ -328,10 +328,10 @@ O padrão é, torque todo o conteúdo SOMENTE do primeiro documento
 ATENÇÃO: o update não aceita o sinal de ".". Assim, não podemos escrever dentro das chaves curso.nome.
 
 db.alunos.update(
-	{"curso.nome": "Sistemas de Informação"},
+	{"curso.nome": "Sistemas De Informação"},
 	{
 		$set : {
-			"curso.nome": "Sistemas De Informação"
+			"curso.nome": "Sistemas de Informação"
 			}
 	},
 	{
@@ -501,3 +501,37 @@ db.alunos.findOne(
 }
 )
 
+** ordenando registros
+
+* Ordenando de forma crescente (menor para o maior)
+db.alunos.find().sort(
+{
+	"nome":1
+})
+
+** limitando
+db.alunos.find().sort(
+{
+	"nome":1
+}).limit(3)
+
+** decrescente
+db.alunos.find().sort(
+{
+	"nome":-1
+})
+
+** Exercicios
+db.alunos.find(
+{
+	notas: {
+		$lt : 5
+	}
+}
+)
+
+db.alunos.findOne(
+{
+	"curso.nome" : "Sistemas De Informação"
+}
+)
